@@ -5,15 +5,18 @@ class SpaceObject:
         mass: Object mass in kg
         position: Position vector
         velocity: Velocity vector
+        acceleration: Acceleration vector
+        radius: Radius in m
         color: Name of color
     """
 
-    def __init__(self, mass, position, velocity, acceleration, color):
-        """Initializes object based on mass, position, velocity, and color"""
+    def __init__(self, mass, position, velocity, acceleration, radius, color):
+        """Initializes object based on mass, position, velocity, acceleration, radius and color"""
         self.mass = mass
         self.position = position
         self.velocity = velocity
         self.acceleration = acceleration
+        self.radius = radius
         self.color = color
 
     def __str__(self):
