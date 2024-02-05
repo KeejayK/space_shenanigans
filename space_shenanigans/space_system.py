@@ -12,26 +12,33 @@ class SpaceSystem:
 
     G = 6.67430e-11
 
-    def __init__(self, objects, dt=100):
+    def __init__(self, objects, dt=1000):
         self.objects = objects
         self.dt = dt
 
     def __str__(self):
-        return f"Space system has objects: {self.objects} and has time increment {self.dt}"
-    
+        """Returns string representation of this SpaceSystem"""
+        return (
+            f"Space system has objects: {self.objects} and has time increment {self.dt}"
+        )
+
     def __repr__(self):
-        return f"SpaceSystem(objects={self.objects}, dt={self.dt}, G={self.G})"
+        """Returns printable representation of this SpaceSystem"""
+        return f"SpaceSystem(objects={self.objects}, dt={self.dt})"
 
     def gravitational_force(self, mass_1, mass_2, distance_vector):
         """Calculate gravitational force between two objects
 
         Args:
-                mass_1: mass of object 1 in kg
-                mass_2: mass of object 2 in kg
-                distance: meters between the centers of object 1 and 2
+            mass_1: Mass of object 1 in kg
+            mass_2: Mass of object 2 in kg
+            distance: Meters between the centers of object 1 and 2
 
         Returns:
-                vector force attracting mass 1 to mass 2
+            Vector force attracting mass 1 to mass 2
+
+        Raises:
+
         """
 
         distance_magnitude = np.linalg.norm(distance_vector)
@@ -40,16 +47,26 @@ class SpaceSystem:
         return distance_normal * force_magnitude
 
     def attract(self, object_1, object_2):
-        """Accelerate two objects towards each other due to gravity"""
+        """Accelerate two SpaceObjects towards each other due to gravity
+
+        Calculates and updates the acceleration due to gravity of two SpaceObjects.
+
+        Args:
+            object_1: SpaceObject to be accelerated 
+            object_2: SpaceObject to be accelerated
+        """
         distance_vector = object_2.position - object_1.position
         force_vector = self.gravitational_force(
             object_1.mass, object_2.mass, distance_vector
         )
         object_1.acceleration = object_1.acceleration + force_vector / object_1.mass
         object_2.acceleration = object_2.acceleration - force_vector / object_2.mass
+        # print(object_1.acceleration)
+        # print(object_2.acceleration)
 
     def accelerate_objects(self):
         """Update acceleration for all objects in system"""
+        # print("Accelerating objects:")
         for object_1 in self.objects:
             for object_2 in self.objects:
                 if object_1 != object_2:
@@ -58,9 +75,18 @@ class SpaceSystem:
     def euler_method(self):
         """Calculate position and velocity of objects in system using Euler method"""
         self.accelerate_objects()
+        # print("New object accelerations and velocities:")
         for entity in self.objects:
+            print("object acceleration")
+            print(entity.acceleration)
+            print("object velocity")
+            print(entity.velocity)
+            print("object position")
+            print(entity.position)
             entity.position = entity.position + entity.velocity * self.dt
             entity.velocity = entity.velocity + entity.acceleration * self.dt
+            print("new object position")
+            print(entity.position)
 
     def runge_kutta_method(self):
         """Calculate position and velocity of objects in system using Runge-Kutta method"""

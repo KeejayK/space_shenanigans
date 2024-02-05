@@ -20,10 +20,11 @@ class SpaceObject:
         self.color = color
 
     def __str__(self):
-        """String representation of a SpaceObject"""
+        """Returns string representation of this SpaceObject"""
         return f"Planet has mass {self.mass}, position {self.position}, velocity {self.velocity}, acceleration {self.acceleration}, color {self.color}"
 
     def __repr__(self):
+        """Returns printable representation of this SpaceObject"""
         return f"SpaceObject(mass={self.mass}, position={self.position}, velocity={self.velocity}, acceleration={self.acceleration}, color={self.color})"
     
     # blue_planet = SpaceObject(1, numpy.array([0, 1, 0]), numpy.array([0, 0, 0]), "Blue")
