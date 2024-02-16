@@ -36,9 +36,6 @@ class SpaceSystem:
 
         Returns:
             Vector force attracting mass 1 to mass 2
-
-        Raises:
-
         """
 
         distance_magnitude = np.linalg.norm(distance_vector)
@@ -61,35 +58,23 @@ class SpaceSystem:
         )
         object_1.acceleration = object_1.acceleration + force_vector / object_1.mass
         object_2.acceleration = object_2.acceleration - force_vector / object_2.mass
-        # print(object_1.acceleration)
-        # print(object_2.acceleration)
 
     def accelerate_objects(self):
         """Update acceleration for all objects in system"""
-        # print("Accelerating objects:")
         for object_1 in self.objects:
             for object_2 in self.objects:
                 if object_1 != object_2:
                     self.attract(object_1, object_2)
 
     def euler_method(self):
-        """Calculate position and velocity of objects in system using Euler method"""
+        """Calculate and update the position and velocity of objects in system using Euler method"""
         self.accelerate_objects()
-        # print("New object accelerations and velocities:")
         for entity in self.objects:
-            print("object acceleration")
-            print(entity.acceleration)
-            print("object velocity")
-            print(entity.velocity)
-            print("object position")
-            print(entity.position)
             entity.position = entity.position + entity.velocity * self.dt
             entity.velocity = entity.velocity + entity.acceleration * self.dt
-            print("new object position")
-            print(entity.position)
 
     def runge_kutta_method(self):
-        """Calculate position and velocity of objects in system using Runge-Kutta method"""
+        """Calculate and update the position and velocity of objects in system using Runge-Kutta method"""
         self.accelerate_objects()
         for entity in self.objects:
             k1 = entity.velocity * self.dt

@@ -27,10 +27,3 @@ class SpaceObject:
         """Returns printable representation of this SpaceObject"""
         return f"SpaceObject(mass={self.mass}, position={self.position}, velocity={self.velocity}, acceleration={self.acceleration}, color={self.color})"
     
-    # blue_planet = SpaceObject(1, numpy.array([0, 1, 0]), numpy.array([0, 0, 0]), "Blue")
-    # red_planet = SpaceObject(1, numpy.array([1, 0, 0]), numpy.array([0, 0, 0]), "Red")
-    # print(blue_planet)
-    # print(red_planet)
-    # blue_planet.gravity(red_planet)
-    # print(blue_planet)
-    # print(red_planet)

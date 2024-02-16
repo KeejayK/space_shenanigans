@@ -25,6 +25,9 @@ def draw_object(space_object):
 
 def draw_objects(system):
     ax.clear()
+    ax.set(xlim3d=(-10000, 10000), xlabel='X')
+    ax.set(zlim3d=(-10000, 10000), zlabel='Z')
+    ax.set(ylim3d=(-10000, 10000), ylabel='Y')
     for space_object in system.objects:
         draw_object(space_object)
 
@@ -45,33 +48,21 @@ def system_accelerations(system):
 
 def system_properties(system):
     system_positions(system)
-    system_velocities(system)
-    system_accelerations(system)
-
-def update(system):
-    system_properties(system)
-    system.euler_method()
-    draw_objects(system)
-
+    # system_velocities(system)
+    # system_accelerations(system)
 
 # Set aspect ratio 
 ax.set_box_aspect([1, 1, 1])
+ax.set(xlim3d=(-10000, 10000), xlabel='X')
+ax.set(zlim3d=(-10000, 10000), zlabel='Z')
+ax.set(ylim3d=(-10000, 10000), ylabel='Y')
 
-# Set axis labels
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_zlabel("Z")
-
-# Set plot limits
-ax.set_xlim([-10000, 10000])
-ax.set_ylim([-10000, 10000])
-ax.set_zlim([-10000, 10000])
 
 
 
 # Initialize objects
-blue_planet = SpaceObject(500, np.array([200,200,200]), np.array([0,0,0]) , np.array([0,0,0]), 500, "Blue")
-red_planet = SpaceObject(2000, np.array([5000,5000,5000]), np.array([0,0,0]) , np.array([0,0,0]), 2000, "Red")
+blue_planet = SpaceObject(500, np.array([200,200,0]), np.array([0,0,0]) , np.array([0,0,0]), 500, "Blue")
+red_planet = SpaceObject(20000, np.array([0,0,0]), np.array([0,0,0]) , np.array([0,0,0]), 2000, "Red")
 
 # blue_planet = SpaceObject(
 #     5.97 * 10 ** 24, np.array([0, 0, 0]), np.array([0, 0, 0]), np.array([0, 0, 0]), "Blue"
@@ -80,32 +71,20 @@ red_planet = SpaceObject(2000, np.array([5000,5000,5000]), np.array([0,0,0]) , n
 #     2 * 10 ** 30, np.array([149.6 * 10 ** 6, 0, 0]), np.array([0, 0, 0]), np.array([0, 0, 0]), "Red"
 # )
 
+
 # Add objects to system
-system = SpaceSystem([], 100000)
+system = SpaceSystem([], 1000000)
 system.objects.append(blue_planet)
 system.objects.append(red_planet)
 
-animation = FuncAnimation(fig, update, frames=range(5), interval=100)
+
+def update(frames):
+    system_properties(system)
+    system.euler_method()
+    draw_objects(system)
+
+
+
+animation = FuncAnimation(fig, update, frames=range(1000), interval=100)
 plt.show()
 
-# print("t=0")
-# system_properties(system)
-# system.euler_method()
-# print("t=100")
-# system_properties(system)
-# system.euler_method()
-# print("t=200")
-# # system_properties(system)
-# system.euler_method()
-# print("t=300")
-# # system_properties(system)
-# system.euler_method()
-# print("t=300")
-# # system_properties(system)
-# system.euler_method()
-# # system_positions(system)  
-
-
-# draw_object(blue_planet)
-# draw_object(red_planet)
-# plt.show()
