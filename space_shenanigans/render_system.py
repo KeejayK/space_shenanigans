@@ -23,11 +23,19 @@ def draw_object(space_object):
     z = space_object.position[2] + space_object.radius * np.outer(np.ones(np.size(u)), np.cos(v))
     ax.plot_surface(x,y,z, color=space_object.color)
 
-def draw_objects(system):
+
+def set_graph(bounds):
+    """Re-establish graph bounds and aspect ratio (matplotlib shenanigans)"""
     ax.clear()
-    ax.set(xlim3d=(-10000, 10000), xlabel='X')
-    ax.set(zlim3d=(-10000, 10000), zlabel='Z')
-    ax.set(ylim3d=(-10000, 10000), ylabel='Y')
+    ax.set_box_aspect([1, 1, 1])
+    ax.set(xlim3d=(-bounds, bounds), xlabel='X')
+    ax.set(zlim3d=(-bounds, bounds), zlabel='Z')
+    ax.set(ylim3d=(-bounds, bounds), ylabel='Y')
+
+
+def draw_objects(system, bounds):
+    """Draw all objects in graph"""
+    set_graph(bounds)
     for space_object in system.objects:
         draw_object(space_object)
 
@@ -51,37 +59,38 @@ def system_properties(system):
     # system_velocities(system)
     # system_accelerations(system)
 
-# Set aspect ratio 
-ax.set_box_aspect([1, 1, 1])
-ax.set(xlim3d=(-10000, 10000), xlabel='X')
-ax.set(zlim3d=(-10000, 10000), zlabel='Z')
-ax.set(ylim3d=(-10000, 10000), ylabel='Y')
 
 
 
 
-# Initialize objects
-blue_planet = SpaceObject(500, np.array([200,200,0]), np.array([0,0,0]) , np.array([0,0,0]), 500, "Blue")
-red_planet = SpaceObject(20000, np.array([0,0,0]), np.array([0,0,0]) , np.array([0,0,0]), 2000, "Red")
 
-# blue_planet = SpaceObject(
+
+earth = SpaceObject(20, np.array([100,-50,150]), np.array([5,0,0]) , np.array([0,0,0]), 200, "Blue")
+
+sun = SpaceObject(10_000, np.array([150,50,0]), np.array([0,5,5]) , np.array([0,0,0]), 100, "Red")
+
+
+# earth = SpaceObject(20,  np.array([1.496 * 10 ** 11,0,0]) , np.array([0,29,788.9]), np.array([0,0,0]), 1000, "Blue")
+# sun = SpaceObject(10000, np.array([0,0,0]), np.array([0,0,0]) , np.array([0,0,0]), 2000, "Red")
+
+# earth = SpaceObject(
 #     5.97 * 10 ** 24, np.array([0, 0, 0]), np.array([0, 0, 0]), np.array([0, 0, 0]), "Blue"
 # )
-# red_planet = SpaceObject(
+# sun = SpaceObject(
 #     2 * 10 ** 30, np.array([149.6 * 10 ** 6, 0, 0]), np.array([0, 0, 0]), np.array([0, 0, 0]), "Red"
 # )
 
 
 # Add objects to system
-system = SpaceSystem([], 1000000)
-system.objects.append(blue_planet)
-system.objects.append(red_planet)
+system = SpaceSystem(objects = [], dt = 10)
+system.objects.append(earth)
+system.objects.append(sun)
 
 
 def update(frames):
     system_properties(system)
     system.euler_method()
-    draw_objects(system)
+    draw_objects(system, 2000)
 
 
 

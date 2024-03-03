@@ -56,11 +56,17 @@ class SpaceSystem:
         force_vector = self.gravitational_force(
             object_1.mass, object_2.mass, distance_vector
         )
-        object_1.acceleration = object_1.acceleration + force_vector / object_1.mass
-        object_2.acceleration = object_2.acceleration - force_vector / object_2.mass
+        object_1.acceleration = object_1.acceleration + (force_vector / object_1.mass)
+        object_2.acceleration = object_2.acceleration - (force_vector / object_2.mass)
+
+    def reset_object_accelerations(self):
+        """Resets the acceleration for all objects in the system to 0"""
+        for obj in self.objects:
+            obj.acceleration = np.array([0,0,0])
 
     def accelerate_objects(self):
         """Update acceleration for all objects in system"""
+        self.reset_object_accelerations()
         for object_1 in self.objects:
             for object_2 in self.objects:
                 if object_1 != object_2:
