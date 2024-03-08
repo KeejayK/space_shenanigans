@@ -62,12 +62,36 @@ def system_properties(system):
 
 
 
+earth_mass = 5.972e24  # kg
+sun_mass = 1.989e30 # kg
+earth_sun_dst = 1.496e11  # m -> 1 AU
+bounds = 1.5 * earth_sun_dst
+
+
+# Initialize objects
+earth = SpaceObject(
+    mass=earth_mass,
+    position=np.array([earth_sun_dst, 0, 0]),  
+    velocity=np.array([0, 0, 0]),  
+    acceleration=np.array([0, 0, 0]),
+    radius=1e10, 
+    color="Blue"
+)
+
+sun = SpaceObject(
+    mass=sun_mass,
+    position=np.array([0, 0, 0]),  
+    velocity=np.array([0, 0, 0]),
+    acceleration=np.array([0, 0, 0]),
+    radius=2.5e10,  
+    color="Red"
+)
 
 
 
-earth = SpaceObject(20, np.array([100,-50,150]), np.array([5,0,0]) , np.array([0,0,0]), 200, "Blue")
+# earth = SpaceObject(20, np.array([100,-50,150]), np.array([5,0,0]) , np.array([0,0,0]), 200, "Blue")
 
-sun = SpaceObject(10_000, np.array([150,50,0]), np.array([0,5,5]) , np.array([0,0,0]), 100, "Red")
+# sun = SpaceObject(10_000, np.array([150,50,0]), np.array([0,5,5]) , np.array([0,0,0]), 100, "Red")
 
 
 # earth = SpaceObject(20,  np.array([1.496 * 10 ** 11,0,0]) , np.array([0,29,788.9]), np.array([0,0,0]), 1000, "Blue")
@@ -82,7 +106,7 @@ sun = SpaceObject(10_000, np.array([150,50,0]), np.array([0,5,5]) , np.array([0,
 
 
 # Add objects to system
-system = SpaceSystem(objects = [], dt = 10)
+system = SpaceSystem(objects = [], dt = 1e5)
 system.objects.append(earth)
 system.objects.append(sun)
 
@@ -90,7 +114,7 @@ system.objects.append(sun)
 def update(frames):
     system_properties(system)
     system.euler_method()
-    draw_objects(system, 2000)
+    draw_objects(system, bounds)
 
 
 
