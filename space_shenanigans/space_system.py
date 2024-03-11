@@ -46,8 +46,6 @@ class SpaceSystem:
     def attract(self, object_1, object_2):
         """Accelerate two SpaceObjects towards each other due to gravity
 
-        Calculates and updates the acceleration due to gravity of two SpaceObjects.
-
         Args:
             object_1: SpaceObject to be accelerated 
             object_2: SpaceObject to be accelerated
@@ -90,3 +88,12 @@ class SpaceSystem:
 
             entity.position = entity.position + (k1 + 2 * k2 + 2 * k3 + k4) / 6
             entity.velocity = entity.velocity + entity.acceleration * self.dt
+
+    def orbital_velocity(self, sun_mass, planet_distance):
+        """Calculate velocity planet would need to orbit sun
+
+        Args:
+            sun_mass: Mass of sun in kg
+            planet_distance: Distance planet is from sun in m 
+        """
+        return np.sqrt(self.G * sun_mass / planet_distance)  

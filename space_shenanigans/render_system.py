@@ -12,8 +12,6 @@ fig = plt.figure()
 ax = fig.add_subplot(111, projection="3d")
 
 
-
-
 def draw_object(space_object):
     """Draws SpaceObject in Matplotlib"""
     u = np.linspace(0, 2 * np.pi, 100)
@@ -62,12 +60,11 @@ def system_properties(system):
 
 
 
+system = SpaceSystem(objects = [], dt = 1e5)
 earth_mass = 5.972e24  # kg
 sun_mass = 1.989e30 # kg
 earth_sun_dst = 1.496e11  # m -> 1 AU
-earth_orbital_velocity = np.sqrt(SpaceSystem.G * sun_mass / earth_sun_dst)  
-bounds = 1.5 * earth_sun_dst
-
+earth_orbital_velocity = system.orbital_velocity(sun_mass, earth_sun_dst)
 
 # Initialize objects
 earth = SpaceObject(
@@ -90,18 +87,16 @@ sun = SpaceObject(
 
 
 
-
 # Add objects to system
-system = SpaceSystem(objects = [], dt = 1e5)
 system.objects.append(earth)
 system.objects.append(sun)
 
 
+bounds = 1.5 * earth_sun_dst
 def update(frames):
     system_properties(system)
     system.euler_method()
     draw_objects(system, bounds)
-
 
 
 animation = FuncAnimation(fig, update, frames=range(1000), interval=100)
