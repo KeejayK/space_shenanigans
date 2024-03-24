@@ -19,6 +19,11 @@ def draw_object(space_object):
     y = space_object.position[1] + space_object.radius * np.outer(np.sin(u), np.sin(v))
     z = space_object.position[2] + space_object.radius * np.outer(np.ones(np.size(u)), np.cos(v))
     ax.plot_surface(x,y,z, color=space_object.color)
+    
+    
+def draw_object_simple(space_object):
+    ax.scatter(space_object.position[0], space_object.position[1], space_object.position[2], 
+               color=space_object.color, s=100)
 
 
 def set_graph(bounds):
@@ -35,6 +40,8 @@ def draw_objects(system, bounds):
     set_graph(bounds)
     for space_object in system.objects:
         draw_object(space_object)
+        # draw_object_simple(space_object)
+
 
 def system_positions(system):
     print("Positions:")
@@ -59,7 +66,7 @@ def system_properties(system):
 
 
 
-system = SpaceSystem(objects = [], dt = 1e5)
+system = SpaceSystem(objects = [], dt = 9e4)
 sun_mass = 1.989e30 # kg
 
 earth_mass = 5.972e24  # kg

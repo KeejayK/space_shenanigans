@@ -77,7 +77,7 @@ class SpaceSystem:
             entity.position = entity.position + entity.velocity * self.dt
             entity.velocity = entity.velocity + entity.acceleration * self.dt
 
-    def runge_kutta_method(self):
+    def runge_kutta_method(self): # currently broken
         """Calculate and update the position and velocity of objects in system using Runge-Kutta method"""
         self.accelerate_objects()
         for entity in self.objects:
